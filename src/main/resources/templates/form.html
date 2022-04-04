@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300&family=Palette+Mosaic&family=Smokum&display=swap" rel="stylesheet">
+
+<header>
+    <style>
+  img {
+    width: 111px;
+    height: auto;
+  }
+
+  .red-text {
+    color: red;
+    font-size: 60px;
+    font-family: Palette Mosaic;
+  }
+
+  .blue-text {
+    color: blue;
+    font-size: 60px;
+    font-family:'Noto Sans HK', sans-serif;
+  }
+
+  .yellow-text {
+    color: yellow;
+    font-size: 60px;
+    font-family: Smokum;
+  }
+</style>
+</header>
+
+
+<main>
+    <h1>Welcome to Simpsons trivia game!</h1>
+
+
+
+<form action="#" th:action="@{/}" th:object="${triviaForm}" method="post">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{name}" /></td>
+            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+        </tr>
+    </table>
+
+        <br>
+        <br>
+        <br>
+
+    <table>
+        <tr>
+           <td><img src=kwiki.jpg alt="kwiki mart" />  </td>
+            <td>Who owns this store?</td>
+            <td><input type="text"  th:field="*{store}"/> </td>
+            <td th:if="${#fields.hasErrors('store')}" th:errors="*{store}">Store Error</td>
+        </tr>
+    </table>
+
+        <br>
+        <br>
+        <br>
+
+    <table>
+        <tr>
+            <td><img src=truck.jpg alt="truck" />  </td>
+            <td>What is the name of this car?</td>
+            <td><input type="text"  th:field="*{car}"/> </td>
+            <td th:if="${#fields.hasErrors('car')}" th:errors="*{car}">Store Error</td>
+        </tr>
+    </table>
+
+    <br>
+    <br>
+    <br>
+
+    <table>
+        <tr>
+            <td><img src=https://frinkiac.com/img/S09E11/882964.jpg alt="vest" />  </td>
+            <td>What is Mr Burns vest made of?</td>
+            <td><input type="text" th:field="*{vest}" /> </td>
+            <td th:if="${#fields.hasErrors('vest')}" th:errors="*{vest}">Store Error</td>
+        </tr>
+    </table>
+
+    <br>
+    <br>
+    <br>
+
+    <table>
+        <tr>
+            <td><img src=https://frinkiac.com/img/S02E11/307847.jpg alt="fish" />  </td>
+            <td>What menu item does homer order?</td>
+            <td><input type="text" th:field="*{food}" /> </td>
+            <td th:if="${#fields.hasErrors('food')}" th:errors="*{food}">Store Error</td>
+        </tr>
+    </table>
+
+    <br>
+    <br>
+    <br>
+
+    <tr>
+        <td><button type="submit">Done?</button></td>
+    </tr>
+
+
+
+
+
+
+
+
+</form>
+
+</main>
+</html>
