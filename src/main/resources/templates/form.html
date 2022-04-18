@@ -53,6 +53,8 @@
            <td><img src=kwiki.jpg alt="kwiki mart" />  </td>
             <td>Who owns this store?</td>
             <td><input type="text"  th:field="*{store}"/> </td>
+            <span th:if="${triviaForm.isStoreCorrect}" > <td> &#9989; </td> </span>
+            <span th:if>  <td> &#9940; </td> </span>
             <td th:if="${#fields.hasErrors('store')}" th:errors="*{store}">Store Error</td>
         </tr>
     </table>
@@ -66,6 +68,8 @@
             <td><img src=truck.jpg alt="truck" />  </td>
             <td>What is the name of this car?</td>
             <td><input type="text"  th:field="*{car}"/> </td>
+            <span th:if > <td> &#9989; </td> </span>
+            <span th:if>  <td> &#9940; </td> </span>
             <td th:if="${#fields.hasErrors('car')}" th:errors="*{car}">Store Error</td>
         </tr>
     </table>
@@ -79,6 +83,8 @@
             <td><img src=https://frinkiac.com/img/S09E11/882964.jpg alt="vest" />  </td>
             <td>What is Mr Burns vest made of?</td>
             <td><input type="text" th:field="*{vest}" /> </td>
+            <span th:if > <td> &#9989; </td> </span>
+            <span th:if>  <td> &#9940; </td> </span>
             <td th:if="${#fields.hasErrors('vest')}" th:errors="*{vest}">Store Error</td>
         </tr>
     </table>

@@ -1,74 +1,71 @@
 package com.example.validatingforminput;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class TriviaForm {
 
     @NotNull
-    @Size(min=2, max=30)
+    @Size(min=3, max=10)
     private String name;
 
     @NotNull
-    @Pattern(regexp = "apu")
+    @Size(min=3, max=10)
     private String store;
 
     @NotNull
-    @Pattern(regexp = "canyon arrow")
+    @Size(min=3, max=10)
     private String car;
 
     @NotNull
-    @Pattern(regexp = "gorrilla chest")
+    @Size(min=3, max=10)
     private String vest;
 
     @NotNull
-    @Pattern(regexp = "blowfish")
+    @Size(min=3, max=10)
     private String food;
 
-    public String getStore() {
-        return store;
+
+    //TODO: cannot run function on initial HTTP reqeust bc all strings null!
+    public boolean isStoreCorrect() {
+        boolean result = false;
+
+        if (store != null){
+            return (store.equalsIgnoreCase("apu") ||
+                    store.equalsIgnoreCase("Apu Nahasapeemapetilon") ||
+                    store.equalsIgnoreCase("Nahasapeemapetilon") ||
+                    store.equalsIgnoreCase("Apu Nahasapasa"));
+        }
+       return result;
     }
 
-    public void setStore(String store) {
-        this.store = store;
+    public boolean isCarCorrect() {
+        return car.equalsIgnoreCase("canyon arrow") ||
+                car.equalsIgnoreCase("Canyonero" );
     }
 
-    public String getName() {
-        return this.name;
+    public boolean isVestCorrect() {
+        return vest.equalsIgnoreCase("gorrilla chest") ||
+                vest.equalsIgnoreCase("gorrilla") ||
+                vest.equalsIgnoreCase("real gorilla chest");
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public boolean isFoodCorrect() {
+        return food.equalsIgnoreCase("blowfish") ||
+                food.equalsIgnoreCase("fugu");
     }
 
-    public String getCar() {
-        return car;
-    }
-
-    public void setCar(String car) {
-        this.car = car;
-    }
-
-    public String getVest() {
-        return vest;
-    }
-
-    public void setVest(String vest) {
-        this.vest = vest;
-    }
-
-    public String getFood() {
-        return food;
-    }
-
-    public void setFood(String food) {
-        this.food = food;
-    }
 
     public String toString() {
-        return "Person(Name: " + this.name;
+        return "Person(Name: " + this.name +
+                " store: " + this.getStore() +
+                " car: " + this.getCar() +
+                " vest: " + this.getVest() +
+                " food: " + this.getFood();
     }
 
 }

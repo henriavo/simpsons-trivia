@@ -3,8 +3,10 @@ package com.example.validatingforminput;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,6 +18,7 @@ public class WebController implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/results").setViewName("results");
+        registry.addViewController("/thanks").setViewName("thanks");
     }
 
     @GetMapping("/")
@@ -24,13 +27,24 @@ public class WebController implements WebMvcConfigurer {
     }
 
     @PostMapping("/")
-    public String checkPersonInfo(@Valid TriviaForm triviaForm, BindingResult bindingResult) {
+    public String checkPersonInfo(@ModelAttribute @Valid TriviaForm triviaForm,BindingResult bindingResult, Model model) {
+        model.addAttribute("triviaform", triviaForm);
+        System.out.println("triviaForm:::: " + triviaForm);
+
+        boolean errors = checkAnswers(triviaForm);
 
         if (bindingResult.hasErrors()) {
             return "form";
         }
 
         return "redirect:/results";
+    }
+
+    public boolean checkAnswers(TriviaForm form){
+        return true;
+//        if (!form.getStore().equalsIgnoreCase("apu")){
+//            re
+//        }
     }
 
     @GetMapping("/error")
@@ -40,6 +54,6 @@ public class WebController implements WebMvcConfigurer {
 
     @PostMapping("/thanks")
     public String showThanks() {
-        return "thanks";
+        return "redirect:/thanks";
     }
 }
