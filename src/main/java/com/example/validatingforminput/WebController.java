@@ -31,13 +31,11 @@ public class WebController implements WebMvcConfigurer {
         model.addAttribute("triviaform", triviaForm);
         System.out.println("triviaForm:::: " + triviaForm);
 
-        boolean errors = checkAnswers(triviaForm);
-
-        if (bindingResult.hasErrors()) {
-            return "form";
+        if (triviaForm.allCorrect()){
+            return "redirect:/results";
         }
-
-        return "redirect:/results";
+        else
+            return "form";
     }
 
     public boolean checkAnswers(TriviaForm form){
