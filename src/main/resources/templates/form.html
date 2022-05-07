@@ -40,7 +40,6 @@
         <tr>
             <td>Name:</td>
             <td><input type="text" th:field="*{name}" /></td>
-            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
         </tr>
     </table>
 
@@ -57,10 +56,7 @@
             <div th:switch="${triviaForm.isStoreCorrect}">
                 <td th:case="correct"> &#9989; </td>
                 <td th:case="wrong"> &#9940; </td>
-                <p th:case="*">hello</p>
             </div>
-            <!--RESULT SECTION-->
-            <td th:if="${#fields.hasErrors('store')}" th:errors="*{store}">Store Error</td>
         </tr>
     </table>
 
@@ -77,11 +73,7 @@
             <div th:switch="${triviaForm.isCarCorrect}">
                 <td th:case="correct"> &#9989; </td>
                 <td th:case="wrong"> &#9940; </td>
-                <p th:case="*">hello</p>
             </div>
-            <!--RESULT SECTION-->
-
-            <td th:if="${#fields.hasErrors('car')}" th:errors="*{car}">Store Error</td>
         </tr>
     </table>
 
@@ -98,10 +90,7 @@
             <div th:switch="${triviaForm.isVestCorrect}">
                 <td th:case="correct"> &#9989; </td>
                 <td th:case="wrong"> &#9940; </td>
-                <p th:case="*">hello</p>
             </div>
-            <!--RESULT SECTION-->
-            <td th:if="${#fields.hasErrors('vest')}" th:errors="*{vest}">Store Error</td>
         </tr>
     </table>
 
@@ -118,10 +107,7 @@
             <div th:switch="${triviaForm.isFoodCorrect}">
                 <td th:case="correct"> &#9989; </td>
                 <td th:case="wrong"> &#9940; </td>
-                <p th:case="*">hello</p>
             </div>
-            <!--RESULT SECTION-->
-            <td th:if="${#fields.hasErrors('food')}" th:errors="*{food}">Store Error</td>
         </tr>
     </table>
 
@@ -132,10 +118,6 @@
     <tr>
         <td><button type="submit">Done?</button></td>
     </tr>
-
-
-
-
 
 
 
