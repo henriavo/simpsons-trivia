@@ -1,12 +1,12 @@
 package com.example.validatingforminput;
 
 import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -26,15 +26,20 @@ public class WebController implements WebMvcConfigurer {
     }
 
     @PostMapping("/")
-    public String checkPersonInfo(@ModelAttribute @Valid TriviaForm triviaForm, Model model) {
-        model.addAttribute("triviaform", triviaForm);
+    public ModelAndView checkPersonInfo(@ModelAttribute TriviaForm triviaForm) {
+        ModelAndView resultModelAndView = new ModelAndView("results");
+        resultModelAndView.addObject(triviaForm);
+
+        ModelAndView formModelAndView = new ModelAndView("form");
+        formModelAndView.addObject(triviaForm);
+
         System.out.println("triviaForm:::: " + triviaForm);
 
         if (triviaForm.allCorrect()){
-            return "results";
+            return resultModelAndView;
         }
         else
-            return "form";
+            return formModelAndView;
     }
 
     public boolean checkAnswers(TriviaForm form){
