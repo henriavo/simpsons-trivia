@@ -3,16 +3,12 @@ package com.example.validatingforminput;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
-import org.springframework.boot.web.servlet.server.Session;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -27,20 +23,19 @@ public class WebController implements WebMvcConfigurer {
     }
 
     @GetMapping("/")
-    public String showForm(TriviaForm triviaForm) {
-        return "form";
-    }
+    public String showForm(TriviaForm triviaForm, HttpServletResponse response) {
+        Cookie aCookie = new Cookie("firstCookie", "hey");
+        response.addHeader("dummy-header","dummy-value");
+        response.addCookie(aCookie);
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new ControllerInterceptor());
+        return "form";
     }
 
     @PostMapping("/")
     public ModelAndView checkPersonInfo(@ModelAttribute TriviaForm triviaForm, HttpServletResponse response) {
         // THIS WORKED 👍🏽
-        Cookie aCookie = new Cookie("dummy", "hey");
-        response.addHeader("dummy-header","dummy-value");
+        Cookie aCookie = new Cookie("secondCookie", "hey");
+//        response.addHeader("dummy-header","dummy-value");
         response.addCookie(aCookie);
 
 
