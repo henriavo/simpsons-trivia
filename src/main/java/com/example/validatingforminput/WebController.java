@@ -4,8 +4,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import com.sun.jdi.IntegerValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,27 +27,22 @@ public class WebController implements WebMvcConfigurer {
     }
 
     @GetMapping("/")
-    public String showForm(TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response) {
+    public String showForm(TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response,
+                           @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
         int count =  request.getCookies().length;
         System.out.println("request cookie count: " + count);
-        for ( Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("firstCookie")){
-                String ogvalue = cookie.getValue();
-                System.out.println("found cookie with value: " + ogvalue);
-                ogvalue = ogvalue + "+hey";
-                cookie.setValue(ogvalue);
-                response.addCookie(cookie);
-            }
+        if(cookie == null){
+            Cookie cc = new Cookie("simpsons-win-streak", "0");
+            response.addCookie(cc);
         }
-//        Cookie aCookie = new Cookie("firstCookie", "hey");
-//        response.addHeader("dummy-header","dummy-value");
-//        response.addCookie(aCookie);
 
         return "form";
     }
 
     @PostMapping("/")
-    public ModelAndView checkPersonInfo(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView checkPersonInfo(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
         // THIS WORKED 👍🏽
         Cookie aCookie = new Cookie("secondCookie", "hey");
 //        response.addHeader("dummy-header","dummy-value");
@@ -60,6 +58,10 @@ public class WebController implements WebMvcConfigurer {
         System.out.println("triviaForm:::: " + triviaForm);
 
         if (triviaForm.allCorrect()){
+            int newValue = Integer.parseInt(cookie) + 1;
+
+            Cookie cc = new Cookie("simpsons-win-streak", String.valueOf(newValue));
+            response.addCookie(cc);
             return resultModelAndView;
         }
         else
