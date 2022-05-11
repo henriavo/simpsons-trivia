@@ -27,10 +27,12 @@ public class WebController implements WebMvcConfigurer {
     }
 
     @GetMapping("/")
-    public String showForm(TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response,
+    public String showForm(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response,
                            @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
+
         int count =  request.getCookies().length;
         System.out.println("request cookie count: " + count);
+
         if(cookie == null){
             Cookie cc = new Cookie("simpsons-win-streak", "0");
             response.addCookie(cc);
@@ -42,28 +44,28 @@ public class WebController implements WebMvcConfigurer {
     @PostMapping("/")
     public ModelAndView checkPersonInfo(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request,
                                         HttpServletResponse response,
-                                        @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
-        // THIS WORKED 👍🏽
-        Cookie aCookie = new Cookie("secondCookie", "hey");
-//        response.addHeader("dummy-header","dummy-value");
-        response.addCookie(aCookie);
-
+                                        @CookieValue(name="simpsons-win-streak", required=true) String cookie) {
 
         ModelAndView resultModelAndView = new ModelAndView("results");
         resultModelAndView.addObject(triviaForm);
 
         ModelAndView formModelAndView = new ModelAndView("form");
-        formModelAndView.addObject(triviaForm);
+        formModelAndView.addObject("triviaForm", triviaForm);
 
-        System.out.println("triviaForm:::: " + triviaForm);
+        System.out.println("triviaForm= " + triviaForm);
 
         if (triviaForm.allCorrect()){
             int newValue = Integer.parseInt(cookie) + 1;
+            System.out.println("logging newValue= " + newValue);
 
             Cookie cc = new Cookie("simpsons-win-streak", String.valueOf(newValue));
             response.addCookie(cc);
+
+            resultModelAndView.addObject("simpsonswinstreak", String.valueOf(newValue));
+
             return resultModelAndView;
         }
+
         else
             return formModelAndView;
     }
