@@ -4,8 +4,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
-import com.sun.jdi.IntegerValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -30,7 +28,11 @@ public class WebController implements WebMvcConfigurer {
     public String showForm(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response,
                            @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
 
-        int count =  request.getCookies().length;
+        int count = 0;
+        if (request.getCookies() != null){
+            count =  request.getCookies().length;
+        }
+
         System.out.println("request cookie count: " + count);
 
         if(cookie == null){
@@ -68,13 +70,6 @@ public class WebController implements WebMvcConfigurer {
 
         else
             return formModelAndView;
-    }
-
-    public boolean checkAnswers(TriviaForm form){
-        return true;
-//        if (!form.getStore().equalsIgnoreCase("apu")){
-//            re
-//        }
     }
 
     @GetMapping("/error")

@@ -27,16 +27,21 @@
     font-family: Smokum;
   }
 </style>
+
+
 </header>
 
-
 <main>
-    <h1>Welcome to Simpsons trivia game!</h1>
+    <h2>Welcome to Simpsons trivia game!</h2>
 
+    <div>
+        <div th:insert="icon"></div>
+    </div>
 
 
 <form action="#" th:action="@{/}" th:object="${triviaForm}" method="post">
     <table>
+
         <tr>
             <td>Name:</td>
             <td><input type="text" th:field="*{name}" /></td>
