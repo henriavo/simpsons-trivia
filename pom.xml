@@ -45,7 +45,17 @@
 			<version>1.18.24</version>
 			<scope>provided</scope>
 		</dependency>
-<!--		TODO: consider adding actuator   -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>3.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-sync</artifactId>
+			<version>4.2.3</version>
+		</dependency>
+		<!--		TODO: consider adding actuator   -->
 <!--		https://spring.io/guides/gs/spring-boot/ -->
 <!--	https://spring.io/guides/gs/actuator-service/	-->
 	</dependencies>
