@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,12 +37,14 @@
 
 <img src=listen_lady.jpg alt="marge listening" />
 
-<form action="/feedback" method="POST">
+<form  th:action="@{/feedback}" th:object="${feedbackForm}" method="POST">
 
 
     <div class="form-group">
         <label id="hellofeedback" for="comment">leave a comment, we are here to listen:</label>
-        <textarea class="form-control" rows="5" id="comment"></textarea>
+        <textarea class="form-control" rows="5" id="comment"  th:field="*{content}">
+
+        </textarea>
     </div>
 
 </form>

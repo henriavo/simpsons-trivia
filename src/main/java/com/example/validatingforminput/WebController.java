@@ -81,13 +81,14 @@ public class WebController implements WebMvcConfigurer {
     }
 
     @GetMapping("/feedback")
-    public String renderFeedback(){
+    public String renderFeedback(@ModelAttribute @Valid  FeedbackForm feedbackForm, Model model){
+        model.addAttribute("feedbackForm", feedbackForm);
         return "feedback";
     }
 
     @PostMapping("/feedback")
-    public String submitFeedback(@ModelAttribute @Valid FeedbackForm form){
-        String content = form.getContent();
+    public String submitFeedback(@ModelAttribute @Valid FeedbackForm feedbackForm){
+        String content = feedbackForm.getContent();
         System.out.println("captured feedback string: " + content);
         return "feedback";
     }
