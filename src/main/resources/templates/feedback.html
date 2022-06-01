@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        img {
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        }
+
+        textarea {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        }
+
+        #hellofeedback {
+          font-family: 'Permanent Marker', cursive;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<img src=listen_lady.jpg alt="marge listening" />
+
+<form action="/feedback" method="POST">
+
+
+    <div class="form-group">
+        <label id="hellofeedback" for="comment">leave a comment, we are here to listen:</label>
+        <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
+
+</form>
+
+</body>
+</html>

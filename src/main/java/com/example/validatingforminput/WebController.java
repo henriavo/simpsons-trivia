@@ -6,10 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -80,8 +77,19 @@ public class WebController implements WebMvcConfigurer {
     @GetMapping("/results")
     public String results(@ModelAttribute @Valid TriviaForm triviaForm, Model model) {
         model.addAttribute("triviaform", triviaForm);
-        System.out.println("hello from results() method *******"  + triviaForm.getName());
         return "results";
+    }
+
+    @GetMapping("/feedback")
+    public String renderFeedback(){
+        return "feedback";
+    }
+
+    @PostMapping("/feedback")
+    public String submitFeedback(@ModelAttribute @Valid FeedbackForm form){
+        String content = form.getContent();
+        System.out.println("captured feedback string: " + content);
+        return "feedback";
     }
 
     @PostMapping("/thanks")

@@ -15,8 +15,8 @@ import java.util.Arrays;
 
 
 @SpringBootApplication
-public class ValidatingFormInputApplication {
-	private static final Log log = LogFactory.getLog(ValidatingFormInputApplication.class);
+public class TriviaApplication {
+	private static final Log log = LogFactory.getLog(TriviaApplication.class);
 	private static String uri = "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.4.2";
 
 	public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class ValidatingFormInputApplication {
 
 		}
 
-		SpringApplication.run(ValidatingFormInputApplication.class, args);
+		SpringApplication.run(TriviaApplication.class, args);
 	}
 
 }
