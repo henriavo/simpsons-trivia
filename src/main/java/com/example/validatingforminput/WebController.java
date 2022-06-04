@@ -88,9 +88,10 @@ public class WebController implements WebMvcConfigurer {
 
     @PostMapping("/feedback")
     public String submitFeedback(@ModelAttribute @Valid FeedbackForm feedbackForm){
+        System.out.println("inside submitFeedback()");
         String content = feedbackForm.getContent();
         System.out.println("captured feedback string: " + content);
-        return "feedback";
+        return "redirect:/";
     }
 
     @PostMapping("/thanks")
