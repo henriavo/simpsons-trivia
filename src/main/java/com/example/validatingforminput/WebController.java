@@ -4,6 +4,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
 @Controller
 public class WebController implements WebMvcConfigurer {
+
+    @Autowired
+    private Environment env;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -91,7 +100,24 @@ public class WebController implements WebMvcConfigurer {
         System.out.println("inside submitFeedback()");
         String content = feedbackForm.getContent();
         System.out.println("captured feedback string: " + content);
+
+        String mongoUrl =  env.getProperty("mongodb.uri");
+        System.out.println("returned mongoUrl from application.properties: " + mongoUrl);
+
+        try (MongoClient mongoClient = MongoClients.create(mongoUrl)) {
+
+            MongoDatabase sampleTrainingDB = mongoClient.getDatabase("simpsons_trivia");
+            MongoCollection<Document> gradesCollection = sampleTrainingDB.getCollection("feedback");
+
+            insertOneDocument(gradesCollection, content);
+        }
+
         return "redirect:/";
+    }
+
+    private static void insertOneDocument(MongoCollection<Document> feedbackCollection, String userFeedback) {
+        feedbackCollection.insertOne(new Document("type", "feedback").append("feedback_string", userFeedback));
+        System.out.println("One feedback inserted.");
     }
 
     @PostMapping("/thanks")
