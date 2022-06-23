@@ -101,7 +101,7 @@ public class WebController implements WebMvcConfigurer {
         String content = feedbackForm.getContent();
         System.out.println("captured feedback string: " + content);
 
-        String mongoUrl =  env.getProperty("mongodb.uri");
+        String mongoUrl =  env.getProperty("mongodb.uri");// get from application.properties
         System.out.println("returned mongoUrl from application.properties: " + mongoUrl);
 
         try (MongoClient mongoClient = MongoClients.create(mongoUrl)) {
