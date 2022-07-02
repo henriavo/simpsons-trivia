@@ -37,10 +37,6 @@ public class WebController implements WebMvcConfigurer {
     @GetMapping("/")
     public String showForm(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response,
                            @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
-        String pass = System.getenv("STRICT_CHICKEN");
-
-        System.out.println(pass);
-
         int count = 0;
         if (request.getCookies() != null){
             count =  request.getCookies().length;
