@@ -4,6 +4,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -109,7 +112,16 @@ public class WebController implements WebMvcConfigurer {
 
         System.out.println("returned mongoUrl from application.properties: " + mongoUrl);
 
-        try (MongoClient mongoClient = MongoClients.create(mongoUrl)) {
+        String pass = System.getenv("STRICT_CHICKEN");
+        System.setProperty("javax.net.ssl.keyStore", "src/main/resources/cert.p12");
+        System.setProperty("javax.net.ssl.keyStorePassword", pass);
+
+        ConnectionString connectionString = new ConnectionString(mongoUrl);
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(connectionString)
+                .build();
+
+        try (MongoClient mongoClient = MongoClients.create(settings)) {
 
             MongoDatabase sampleTrainingDB = mongoClient.getDatabase("simpsons_trivia");
             MongoCollection<Document> gradesCollection = sampleTrainingDB.getCollection("feedback");
