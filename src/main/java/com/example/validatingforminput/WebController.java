@@ -24,6 +24,7 @@ public class WebController implements WebMvcConfigurer {
     @Autowired
     private Environment env;
 
+    
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/results").setViewName("results");
