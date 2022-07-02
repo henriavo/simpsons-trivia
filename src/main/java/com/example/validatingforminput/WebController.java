@@ -33,6 +33,9 @@ public class WebController implements WebMvcConfigurer {
     @GetMapping("/")
     public String showForm(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response,
                            @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
+        String pass = System.getenv("STRICT_CHICKEN");
+
+        System.out.println(pass);
 
         int count = 0;
         if (request.getCookies() != null){
@@ -102,6 +105,7 @@ public class WebController implements WebMvcConfigurer {
         System.out.println("captured feedback string: " + content);
 
         String mongoUrl =  env.getProperty("mongodb.uri");// get from application.properties
+
         System.out.println("returned mongoUrl from application.properties: " + mongoUrl);
 
         try (MongoClient mongoClient = MongoClients.create(mongoUrl)) {
