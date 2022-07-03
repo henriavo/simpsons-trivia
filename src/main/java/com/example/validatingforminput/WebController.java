@@ -109,7 +109,7 @@ public class WebController implements WebMvcConfigurer {
         System.out.println("returned mongoUrl from application.properties: " + mongoUrl);
 
         String pass = System.getenv("STRICT_CHICKEN");
-        System.setProperty("javax.net.ssl.keyStore", "src/main/resources/cert.p12");
+        System.setProperty("javax.net.ssl.keyStore", "cert.p12");
         System.setProperty("javax.net.ssl.keyStorePassword", pass);
 
         ConnectionString connectionString = new ConnectionString(mongoUrl);
