@@ -23,6 +23,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class WebController implements WebMvcConfigurer {
@@ -130,9 +131,11 @@ public class WebController implements WebMvcConfigurer {
 
         ConnectionString connectionString = new ConnectionString(mongouri);
         MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(connectionString)
                 .applyToSslSettings(builder ->
                         builder.enabled(true))
-                .applyConnectionString(connectionString)
+                .applyToClusterSettings(builder ->
+                        builder.serverSelectionTimeout(60, TimeUnit.SECONDS))
                 .build();
 
         try (MongoClient mongoClient = MongoClients.create(settings)) {
