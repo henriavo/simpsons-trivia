@@ -11,6 +11,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.connection.ClusterConnectionMode;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -134,8 +135,9 @@ public class WebController implements WebMvcConfigurer {
                 .applyConnectionString(connectionString)
                 .applyToSslSettings(builder ->
                         builder.enabled(true))
-//                .applyToClusterSettings(builder ->
-//                        builder.serverSelectionTimeout(60, TimeUnit.SECONDS))
+                .applyToClusterSettings(builder ->
+                        builder.serverSelectionTimeout(60, TimeUnit.SECONDS)
+                                .mode(ClusterConnectionMode.SINGLE))
                 .applyToSocketSettings(builder ->
                         builder.connectTimeout(60, TimeUnit.SECONDS)
                                 .readTimeout(60, TimeUnit.SECONDS))
