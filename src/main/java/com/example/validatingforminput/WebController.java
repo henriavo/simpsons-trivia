@@ -13,6 +13,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +22,16 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.File;
+
 @Controller
 public class WebController implements WebMvcConfigurer {
 
     @Autowired
     private Environment env;
+
+    @Value("${hello.accept.location}")
+    private String location;
 
     
     @Override
@@ -37,6 +43,7 @@ public class WebController implements WebMvcConfigurer {
     @GetMapping("/")
     public String showForm(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response,
                            @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
+        System.out.println("hello.accept.location=" + location);
         int count = 0;
         if (request.getCookies() != null){
             count =  request.getCookies().length;
@@ -107,6 +114,13 @@ public class WebController implements WebMvcConfigurer {
         String mongoUrl =  env.getProperty("mongodb.uri");// get from application.properties
 
         System.out.println("returned mongoUrl from application.properties: " + mongoUrl);
+
+        File f = new File("cert.p12");
+        if(f.exists() && !f.isDirectory()) {
+            System.out.println("FOUND cert.p12");
+        }
+        else
+            System.out.println("DID NOT FIND cert.12");
 
         String pass = System.getenv("STRICT_CHICKEN");
         System.setProperty("javax.net.ssl.keyStore", "cert.p12");
