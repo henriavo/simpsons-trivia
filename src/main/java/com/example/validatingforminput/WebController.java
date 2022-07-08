@@ -33,6 +33,9 @@ public class WebController implements WebMvcConfigurer {
     @Value("${hello.accept.location}")
     private String location;
 
+    @Value("${mongodb.uri}")
+    private String mongouri;
+
     
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -44,6 +47,7 @@ public class WebController implements WebMvcConfigurer {
     public String showForm(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response,
                            @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
         System.out.println("hello.accept.location=" + location);
+        System.out.println("mongo.uri=" + mongouri);
         int count = 0;
         if (request.getCookies() != null){
             count =  request.getCookies().length;
@@ -111,9 +115,7 @@ public class WebController implements WebMvcConfigurer {
         String content = feedbackForm.getContent();
         System.out.println("captured feedback string: " + content);
 
-        String mongoUrl =  env.getProperty("mongodb.uri");// get from application.properties
-
-        System.out.println("returned mongoUrl from application.properties: " + mongoUrl);
+        System.out.println("returned mongoUrl from application.properties: " + mongouri);
 
         File f = new File("cert.p12");
         if(f.exists() && !f.isDirectory()) {
@@ -126,8 +128,10 @@ public class WebController implements WebMvcConfigurer {
         System.setProperty("javax.net.ssl.keyStore", "cert.p12");
         System.setProperty("javax.net.ssl.keyStorePassword", pass);
 
-        ConnectionString connectionString = new ConnectionString(mongoUrl);
+        ConnectionString connectionString = new ConnectionString(mongouri);
         MongoClientSettings settings = MongoClientSettings.builder()
+                .applyToSslSettings(builder ->
+                        builder.enabled(true))
                 .applyConnectionString(connectionString)
                 .build();
 
