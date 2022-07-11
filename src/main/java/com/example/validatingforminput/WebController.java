@@ -129,7 +129,7 @@ public class WebController implements WebMvcConfigurer {
         else
             System.out.println("DID NOT FIND cert.12");
 
-        doSomeBullshitBecauseHerokuSucks();
+//        doSomeBullshitBecauseHerokuSucks();
 
         String pass = System.getenv("STRICT_CHICKEN");
         System.setProperty("javax.net.ssl.keyStore", "cert.p12");
