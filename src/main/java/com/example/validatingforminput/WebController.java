@@ -131,9 +131,9 @@ public class WebController implements WebMvcConfigurer {
 
 //        doSomeBullshitBecauseHerokuSucks();
 
-//        String pass = System.getenv("STRICT_CHICKEN");
-//        System.setProperty("javax.net.ssl.keyStore", "cert.p12");
-//        System.setProperty("javax.net.ssl.keyStorePassword", pass);
+        String pass = System.getenv("STRICT_CHICKEN");
+        System.setProperty("javax.net.ssl.keyStore", "cert.p12");
+        System.setProperty("javax.net.ssl.keyStorePassword", pass);
 
         ConnectionString connectionString = new ConnectionString(mongouri);
         MongoClientSettings settings = MongoClientSettings.builder()
