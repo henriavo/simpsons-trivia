@@ -24,6 +24,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
+import java.net.Authenticator;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -112,7 +115,7 @@ public class WebController implements WebMvcConfigurer {
     }
 
     @PostMapping("/feedback")
-    public String submitFeedback(@ModelAttribute @Valid FeedbackForm feedbackForm){
+    public String submitFeedback(@ModelAttribute @Valid FeedbackForm feedbackForm) throws MalformedURLException {
         System.out.println("inside submitFeedback()");
         String content = feedbackForm.getContent();
         System.out.println("captured feedback string: " + content);
@@ -125,6 +128,8 @@ public class WebController implements WebMvcConfigurer {
         }
         else
             System.out.println("DID NOT FIND cert.12");
+
+        doSomeBullshitBecauseHerokuSucks();
 
         String pass = System.getenv("STRICT_CHICKEN");
         System.setProperty("javax.net.ssl.keyStore", "cert.p12");
@@ -165,5 +170,14 @@ public class WebController implements WebMvcConfigurer {
     @PostMapping("/thanks")
     public String showThanks() {
         return "redirect:/thanks";
+    }
+
+    public void doSomeBullshitBecauseHerokuSucks() throws MalformedURLException {
+        URL fixie = new URL(System.getenv("FIXIE_SOCKS_HOST"));
+        String[] fixieUserInfo = fixie.getUserInfo().split(":");
+        String fixieUser = fixieUserInfo[0];
+        String fixiePassword = fixieUserInfo[1];
+        System.setProperty("socksProxyHost", fixie.getHost());
+        Authenticator.setDefault(new ProxyAuthenticator(fixieUser, fixiePassword));
     }
 }
