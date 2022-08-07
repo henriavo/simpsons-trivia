@@ -140,15 +140,6 @@ public class WebController implements WebMvcConfigurer {
                 .applyConnectionString(connectionString)
                 .applyToSslSettings(builder ->
                         builder.enabled(true))
-                .applyToClusterSettings(builder ->
-                        builder.serverSelectionTimeout(60, TimeUnit.SECONDS)
-                                .mode(ClusterConnectionMode.MULTIPLE))
-                .applyToSocketSettings(builder ->
-                        builder.connectTimeout(60, TimeUnit.SECONDS)
-                                .readTimeout(60, TimeUnit.SECONDS))
-                .applyToConnectionPoolSettings(builder ->
-                        builder.maxWaitTime(60, TimeUnit.SECONDS)
-                                .maxSize(200))
                 .build();
 
         try (MongoClient mongoClient = MongoClients.create(settings)) {
