@@ -31,17 +31,8 @@ import java.util.concurrent.TimeUnit;
 
 @Controller
 public class WebController implements WebMvcConfigurer {
+    private @Autowired MongoClient mongoClient;
 
-    @Autowired
-    private Environment env;
-
-    @Value("${hello.accept.location}")
-    private String location;
-
-    @Value("${mongodb.uri}")
-    private String mongouri;
-
-    
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/results").setViewName("results");
@@ -51,8 +42,6 @@ public class WebController implements WebMvcConfigurer {
     @GetMapping("/")
     public String showForm(@ModelAttribute TriviaForm triviaForm, HttpServletRequest request, HttpServletResponse response,
                            @CookieValue(name="simpsons-win-streak", required=false) String cookie) {
-        System.out.println("hello.accept.location=" + location);
-        System.out.println("mongo.uri=" + mongouri);
         int count = 0;
         if (request.getCookies() != null){
             count =  request.getCookies().length;
@@ -120,34 +109,14 @@ public class WebController implements WebMvcConfigurer {
         String content = feedbackForm.getContent();
         System.out.println("captured feedback string: " + content);
 
-        System.out.println("returned mongoUrl from application.properties: " + mongouri);
-
-        File f = new File("cert.p12");
-        if(f.exists() && !f.isDirectory()) {
-            System.out.println("FOUND cert.p12");
-        }
-        else
-            System.out.println("DID NOT FIND cert.12");
-
-//        doSomeBullshitBecauseHerokuSucks();
-
-        String pass = System.getenv("STRICT_CHICKEN");
-        System.setProperty("javax.net.ssl.keyStore", "cert.p12");
-        System.setProperty("javax.net.ssl.keyStorePassword", pass);
-
-        ConnectionString connectionString = new ConnectionString(mongouri);
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .applyToSslSettings(builder ->
-                        builder.enabled(true))
-                .build();
-
-        try (MongoClient mongoClient = MongoClients.create(settings)) {
-
+        try  {
             MongoDatabase sampleTrainingDB = mongoClient.getDatabase("simpsons_trivia");
             MongoCollection<Document> gradesCollection = sampleTrainingDB.getCollection("feedback");
 
             insertOneDocument(gradesCollection, content);
+        }
+        catch(Exception e) {
+            System.out.println("ERROR!!! " + e.getMessage());
         }
 
         return "redirect:/";
@@ -163,12 +132,4 @@ public class WebController implements WebMvcConfigurer {
         return "redirect:/thanks";
     }
 
-    public void doSomeBullshitBecauseHerokuSucks() throws MalformedURLException {
-        URL fixie = new URL(System.getenv("FIXIE_SOCKS_HOST"));
-        String[] fixieUserInfo = fixie.getUserInfo().split(":");
-        String fixieUser = fixieUserInfo[0];
-        String fixiePassword = fixieUserInfo[1];
-        System.setProperty("socksProxyHost", fixie.getHost());
-        Authenticator.setDefault(new ProxyAuthenticator(fixieUser, fixiePassword));
-    }
 }
