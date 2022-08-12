@@ -57,11 +57,11 @@
 
     <table>
         <tr>
-           <td><img src=kwiki.jpg alt="kwiki mart" />  </td>
-            <td>Who owns this store?</td>
-            <td><input type="text"  th:field="*{store}"/> </td>
+           <td><img src=computer.jpg alt="computer" />  </td>
+            <td>What device does home use to change his grade?</td>
+            <td><input type="text"  th:field="*{computer}"/> </td>
             <!--RESULT SECTION-->
-            <div th:switch="${triviaForm.isStoreCorrect}">
+            <div th:switch="${triviaForm.isComputerCorrect}">
                 <td th:case="correct"> &#9989; </td>
                 <td th:case="wrong"> &#9940; </td>
             </div>
@@ -74,11 +74,11 @@
 
     <table>
         <tr>
-            <td><img src=truck.jpg alt="truck" />  </td>
-            <td>What is the name of this car?</td>
-            <td><input type="text"  th:field="*{car}"/> </td>
+            <td><img src=just_moe.jpg alt="just_moe" />  </td>
+            <td>Who is homer accused of murdering?</td>
+            <td><input type="text"  th:field="*{justmoe}"/> </td>
             <!--RESULT SECTION-->
-            <div th:switch="${triviaForm.isCarCorrect}">
+            <div th:switch="${triviaForm.isMurderCorrect}">
                 <td th:case="correct"> &#9989; </td>
                 <td th:case="wrong"> &#9940; </td>
             </div>
@@ -91,11 +91,11 @@
 
     <table>
         <tr>
-            <td><img src=https://frinkiac.com/img/S09E11/882964.jpg alt="vest" />  </td>
-            <td>What is Mr Burns vest made of?</td>
-            <td><input type="text" th:field="*{vest}" /> </td>
+            <td><img src=gun.jpg alt="gun" />  </td>
+            <td>What does this police academy recruit keep asking about?</td>
+            <td><input type="text" th:field="*{gun}" /> </td>
             <!--RESULT SECTION-->
-            <div th:switch="${triviaForm.isVestCorrect}">
+            <div th:switch="${triviaForm.isGunCorrect}">
                 <td th:case="correct"> &#9989; </td>
                 <td th:case="wrong"> &#9940; </td>
             </div>
@@ -108,11 +108,11 @@
 
     <table>
         <tr>
-            <td><img src=https://frinkiac.com/img/S02E11/307847.jpg alt="fish" />  </td>
-            <td>What menu item does homer order?</td>
-            <td><input type="text" th:field="*{food}" /> </td>
+            <td><img src=zeppelin_rules.jpg alt="fish" />  </td>
+            <td>What does Otto yell moments before the current takes him away?</td>
+            <td><input type="text" th:field="*{zeppelin}" /> </td>
             <!--RESULT SECTION-->
-            <div th:switch="${triviaForm.isFoodCorrect}">
+            <div th:switch="${triviaForm.isZeppelinCorrect}">
                 <td th:case="correct"> &#9989; </td>
                 <td th:case="wrong"> &#9940; </td>
             </div>

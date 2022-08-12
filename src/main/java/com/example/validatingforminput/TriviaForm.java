@@ -15,59 +15,54 @@ public class TriviaForm {
 
     private String name;
 
-    private String store;
+    private String computer;
 
-    private String car;
+    private String gun;
 
-    private String vest;
+    private String justmoe;
 
-    private String food;
+    private String zeppelin;
 
-    public String isStoreCorrect() {
-        if (store == null) {
+    public String isComputerCorrect() {
+        if (computer == null) {
             return EMPTY;
         }
-        else if (store.equalsIgnoreCase("apu") ||
-                    store.equalsIgnoreCase("Apu Nahasapeemapetilon") ||
-                    store.equalsIgnoreCase("Nahasapeemapetilon") ||
-                    store.equalsIgnoreCase("Apu Nahasapasa")){
+        else if (computer.equalsIgnoreCase("computer")){
             return CORRECT;
         }
         else
             return WRONG;
     }
 
-    public String isCarCorrect() {
-        if (car == null) {
+    public String isGunCorrect() {
+        if (gun == null) {
             return EMPTY;
         }
-        else if (car.equalsIgnoreCase("canyon arrow") ||
-                car.equalsIgnoreCase("Canyonero" )) {
+        else if (gun.equalsIgnoreCase("gun") ||
+                gun.equalsIgnoreCase("a gun" )) {
             return CORRECT;
         }
         else
             return WRONG;
     }
 
-    public String isVestCorrect() {
-        if (vest == null) {
+    public String isMurderCorrect() {
+        if (justmoe == null) {
             return EMPTY;
         }
-        else if (vest.equalsIgnoreCase("gorrilla chest") ||
-                vest.equalsIgnoreCase("gorrilla") ||
-                vest.equalsIgnoreCase("real gorilla chest")) {
+        else if (justmoe.equalsIgnoreCase("just moe")) {
             return CORRECT;
         }
         else
             return WRONG;
     }
 
-    public String isFoodCorrect() {
-        if (food == null) {
+    public String isZeppelinCorrect() {
+        if (zeppelin == null) {
             return EMPTY;
         }
-        else if (food.equalsIgnoreCase("blowfish") ||
-                food.equalsIgnoreCase("fugu")) {
+        else if (zeppelin.equalsIgnoreCase("zeppelin rules!") ||
+                zeppelin.equalsIgnoreCase("zeppelin rules")) {
             return CORRECT;
         }
         else
@@ -75,10 +70,10 @@ public class TriviaForm {
     }
 
     public boolean allCorrect(){
-        if (Objects.equals(this.isStoreCorrect(), CORRECT) &&
-                Objects.equals(this.isCarCorrect(), CORRECT) &&
-                Objects.equals(this.isVestCorrect(), CORRECT) &&
-                Objects.equals(this.isFoodCorrect(), CORRECT)) {
+        if (Objects.equals(this.isComputerCorrect(), CORRECT) &&
+                Objects.equals(this.isGunCorrect(), CORRECT) &&
+                Objects.equals(this.isMurderCorrect(), CORRECT) &&
+                Objects.equals(this.isZeppelinCorrect(), CORRECT)) {
             return true;
         }
         else
@@ -87,10 +82,10 @@ public class TriviaForm {
 
     public String toString() {
         return "Person(Name: " + this.name +
-                " store: " + this.getStore() +
-                " car: " + this.getCar() +
-                " vest: " + this.getVest() +
-                " food: " + this.getFood();
+                " store: " + this.getComputer() +
+                " car: " + this.getGun() +
+                " vest: " + this.getJustmoe() +
+                " food: " + this.getZeppelin();
     }
 
 }
