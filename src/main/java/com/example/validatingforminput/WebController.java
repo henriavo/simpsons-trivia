@@ -7,10 +7,7 @@ import javax.validation.Valid;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import com.mongodb.connection.ClusterConnectionMode;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +24,8 @@ import java.io.File;
 import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -111,9 +110,9 @@ public class WebController implements WebMvcConfigurer {
 
         try  {
             MongoDatabase sampleTrainingDB = mongoClient.getDatabase("simpsons_trivia");
-            MongoCollection<Document> gradesCollection = sampleTrainingDB.getCollection("feedback");
+            MongoCollection<Document> feedbackCollection = sampleTrainingDB.getCollection("feedback");
 
-            insertOneDocument(gradesCollection, content);
+            insertOneDocument(feedbackCollection, content);
         }
         catch(Exception e) {
             System.out.println("ERROR!!! " + e.getMessage());
@@ -125,6 +124,28 @@ public class WebController implements WebMvcConfigurer {
     private static void insertOneDocument(MongoCollection<Document> feedbackCollection, String userFeedback) {
         feedbackCollection.insertOne(new Document("type", "feedback").append("feedback_string", userFeedback));
         System.out.println("One feedback inserted.");
+    }
+
+    @GetMapping("/feedback/all")
+    public String fetchAllFeedback(Model model){
+        MongoCollection<Document> feedbackCollection = null;
+        List<String> stringResults = new ArrayList<String>();
+        try {
+            MongoDatabase sampleTrainingDB = mongoClient.getDatabase("simpsons_trivia");
+            feedbackCollection = sampleTrainingDB.getCollection("feedback");
+
+            for(Document cur : feedbackCollection.find()){
+                System.out.println(cur.get("feedback_string"));
+                stringResults.add(cur.get("feedback_string").toString());
+            }
+        }
+        catch(Exception e) {
+            System.out.println("ERROR!!! " + e.getMessage());
+        }
+        model.addAttribute("stringResults", stringResults);
+
+
+        return "feedbackAll";
     }
 
     @PostMapping("/thanks")
